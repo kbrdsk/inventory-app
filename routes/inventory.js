@@ -8,7 +8,7 @@ controllers.carb = require("../controllers/carbController");
 controllers.spice = require("../controllers/spiceController");
 
 router.get("/", function (req, res, next) {
-	res.render("default", { title: "Express" });
+	res.render("default", { title: "Food Inventory" });
 });
 
 for (let category of ["produce", "protein", "carb", "spice"]) {
