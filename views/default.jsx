@@ -33,11 +33,9 @@ function NavBar(props) {
 					<a href="/inventory/protein">Carbs</a>
 				</li>
 				<li>
-					<a href="/inventory/spices">Spices</a>
+					<a href="/inventory/spice">Spices</a>
 				</li>
-				<li>
-					<hr>
-				</li>
+				<hr />
 				<li>
 					<a href="/inventory/produce/create">Create New Produce</a>
 				</li>
