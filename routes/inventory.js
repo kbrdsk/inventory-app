@@ -2,31 +2,30 @@ const express = require("express");
 const router = express.Router();
 
 const controllers = {};
-controllers.produce = require("../controllers/produceController");
-controllers.protein = require("../controllers/proteinController");
-controllers.carb = require("../controllers/carbController");
-controllers.spice = require("../controllers/spiceController");
+controllers.item = require("../controllers/itemController");
+controllers.recipe = require("../controllers/recipeController");
+controllers.category = require("../controllers/categoryController");
 
 router.get("/", function (req, res, next) {
 	res.render("default", { title: "Food Inventory" });
 });
 
-for (let category of ["produce", "protein", "carb", "spice"]) {
-	const categoryRouter = express.Router();
+for (let collection of ["item", "recipe", "category"]) {
+	const collectionRouter = express.Router();
 
 	for (let crudVal of ["create", "update", "delete"]) {
 		for (let method of ["get", "post"]) {
-			categoryRouter[method](
+			collectionRouter[method](
 				`/${crudVal}`,
-				controllers[category][crudVal][method]
+				controllers[collection][crudVal][method]
 			);
 		}
 	}
 
-	categoryRouter.get("/:id", controllers[category].detail.get);
-	categoryRouter.get("/", controllers[category].list.get);
+	collectionRouter.get("/:id", controllers[collection].detail.get);
+	collectionRouter.get("/", controllers[collection].list.get);
 
-	router.use(`/${category}`, categoryRouter);
+	router.use(`/${collection}`, collectionRouter);
 }
 
 module.exports = router;

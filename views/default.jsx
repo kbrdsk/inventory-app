@@ -8,7 +8,6 @@ function DefaultLayout(props) {
 				<title>{props.title}</title>
 			</head>
 			<body>
-				<h1>{props.children}</h1>
 				<NavBar />
 				{props.children}
 			</body>
@@ -24,29 +23,23 @@ function NavBar(props) {
 					<a href="/inventory">Home</a>
 				</li>
 				<li>
-					<a href="/inventory/produce">Produce</a>
+					<a href="/inventory/item">Food Item</a>
 				</li>
 				<li>
-					<a href="/inventory/protein">Protein</a>
+					<a href="/inventory/category">Categories</a>
 				</li>
 				<li>
-					<a href="/inventory/protein">Carbs</a>
-				</li>
-				<li>
-					<a href="/inventory/spice">Spices</a>
+					<a href="/inventory/recipe">Recipes</a>
 				</li>
 				<hr />
 				<li>
-					<a href="/inventory/produce/create">Create New Produce</a>
+					<a href="/inventory/item/create">Create New Food Item</a>
 				</li>
 				<li>
-					<a href="/inventory/protein/create">Create New Protein</a>
+					<a href="/inventory/category/create">Create New Category</a>
 				</li>
 				<li>
-					<a href="/inventory/carb/create">Create New Carb</a>
-				</li>
-				<li>
-					<a href="/inventory/spice/create">Create New Spice</a>
+					<a href="/inventory/recipe/create">Create New Recipe</a>
 				</li>
 			</ul>
 		</nav>
