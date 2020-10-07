@@ -10,7 +10,7 @@ const ItemSchema = new Schema({
 		default: "Out",
 	},
 	categories: [{ type: Schema.Types.ObjectId, ref: "Category" }],
-	expiration: { type: Date, required: true },
+	expiration: { type: Date },
 	vegan: { type: Boolean, required: true },
 });
 
