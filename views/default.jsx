@@ -4,7 +4,12 @@ function DefaultLayout(props) {
 	return (
 		<html>
 			<head>
-				<meta charset="utf8" />
+				<meta charSet="utf8" />
+				<link
+					rel="stylesheet"
+					href="/stylesheets/style.css"
+					type="text/css"
+				/>
 				<title>{props.title}</title>
 			</head>
 			<body>

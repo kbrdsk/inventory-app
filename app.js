@@ -25,10 +25,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(
+	"/",
 	sassMiddleware({
-		src: path.join(__dirname, "public"),
+		src: __dirname,
 		dest: path.join(__dirname, "public"),
 		indentedSyntax: false, // true = .sass and false = .scss
+		debug: true,
 		sourceMap: true,
 	})
 );
