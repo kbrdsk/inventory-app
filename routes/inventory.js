@@ -7,7 +7,7 @@ controllers.recipe = require("../controllers/recipeController");
 controllers.category = require("../controllers/categoryController");
 
 router.get("/", function (req, res, next) {
-	res.render("default", { title: "Food Inventory" });
+	res.render("home");
 });
 
 for (let collection of ["item", "recipe", "category"]) {
