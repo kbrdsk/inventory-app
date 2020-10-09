@@ -1,7 +1,7 @@
 db_url.js
 populatedb.js
 testfile.js
-public/stylesheets/*
+public/stylesheets/
 
 # Logs
 logs
