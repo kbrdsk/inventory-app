@@ -3,11 +3,13 @@ const { body, validationResult } = require("express-validator/check");
 const { sanitizeBody } = require("express-validator/filter");
 
 module.exports.list = {
-	get(req, res, next) {
-		Category.find({}, "name").then(
-			(category_list) => res.render("categoryList", { category_list }),
-			(error) => res.render("home", { error })
-		);
+	async get(req, res, next) {
+		try {
+			const category_list = await Category.find({});
+			res.render("categoryList", { category_list });
+		} catch (error) {
+			res.render("categoryList", { error });
+		}
 	},
 };
 

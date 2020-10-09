@@ -10,16 +10,17 @@ controllers.item = require("../controllers/itemController");
 controllers.recipe = require("../controllers/recipeController");
 controllers.category = require("../controllers/categoryController");
 
-router.get("/", function (req, res, next) {
-	Promise.all([
-		Category.countDocuments({}),
-		Item.countDocuments({stock: {$ne: "Out"}}),
-		Recipe.countDocuments({}),
-	]).then(
-		([categoryCount, itemCount, recipeCount]) => {
-			res.render("home", {categoryCount, itemCount, recipeCount})
-		} 
-	);
+router.get("/", async function (req, res, next) {
+	try {
+		const [categoryCount, itemCount, recipeCount] = await Promise.all([
+			Category.countDocuments({}),
+			Item.countDocuments({ stock: { $ne: "Out" } }),
+			Recipe.countDocuments({}),
+		]);
+		res.render("home", { categoryCount, itemCount, recipeCount });
+	} catch (error) {
+		res.render("home", { error });
+	}
 });
 
 for (let collection of ["item", "recipe", "category"]) {
