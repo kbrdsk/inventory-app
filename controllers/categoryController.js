@@ -4,10 +4,12 @@ const { sanitizeBody } = require("express-validator/filter");
 
 module.exports.list = {
 	get(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Category List");
+		Category.find({}, "name").then(
+			(category_list) => res.render("categoryList", { category_list }),
+			(error) => res.render("home", { error })
+		);
 	},
 };
-
 
 module.exports.detail = {
 	get(req, res, next) {
