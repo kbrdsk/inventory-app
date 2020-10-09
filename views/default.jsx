@@ -28,10 +28,10 @@ function NavBar(props) {
 					<a href="/inventory">Home</a>
 				</li>
 				<li>
-					<a href="/inventory/item">Food Items</a>
+					<a href="/inventory/category">Categories</a>
 				</li>
 				<li>
-					<a href="/inventory/category">Categories</a>
+					<a href="/inventory/item">Food Items</a>
 				</li>
 				<li>
 					<a href="/inventory/recipe">Recipes</a>
