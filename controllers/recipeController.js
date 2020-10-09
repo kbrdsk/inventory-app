@@ -1,4 +1,5 @@
 const Recipe = require("../models/recipe");
+const Item = require("../models/item");
 const { body, validationResult } = require("express-validator/check");
 const { sanitizeBody } = require("express-validator/filter");
 
@@ -14,8 +15,24 @@ module.exports.list = {
 };
 
 module.exports.detail = {
-	get(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Recipe Detail");
+	async get(req, res, next) {
+		try {
+			const recipe = await Recipe.findById(req.params.id).populate({
+				path: "ingredients",
+				populate: {
+					path: "item",
+					model: "Item"
+				}
+			});
+			if (recipe === null) {
+				const error = new Error("Recipe not found");
+				error.status = 404;
+				next(error);
+			}
+			res.render("recipeDetail", { recipe });
+		} catch (error) {
+			res.render("recipeDetail", { error });
+		}
 	},
 };
 

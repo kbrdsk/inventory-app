@@ -1,0 +1,32 @@
+p.time{
+	margin-top: 0;
+	margin-bottom: 2em;
+	span{
+		margin: 0 1em;
+	}
+}
+
+ul.ingredients{
+	list-style-position: inside;
+	display: inline-block;
+	padding: 0.2em;
+	margin-top: 0;
+
+	li{
+		display: flex;
+		justify-content: space-between;
+		padding: 0.2em;
+
+		span.amount{
+			margin-left: 2em;
+		}
+
+		&:hover{
+			background-color: #ddd;
+		}
+	}
+}
+
+ol.instructions{
+	list-style-position: inside;
+}
