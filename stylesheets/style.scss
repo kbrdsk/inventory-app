@@ -1,8 +1,9 @@
 body {
 	padding: 1em;
+	margin-left: 8em;
 	font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	user-select: none;
 }
 
@@ -15,10 +16,13 @@ a.discreet {
 	text-decoration: none;
 }
 
-main {
+header {
 	h1 {
-		color: #04a;
+		color: #016;
 	}
+}
+
+main {
 	h4 {
 		color: #016;
 	}
@@ -29,6 +33,9 @@ nav {
 	padding-left: 0;
 	display: inline-block;
 	white-space: nowrap;
+	position: fixed;
+	left: 0;
+	top: 0;
 
 	ul {
 		list-style: none;

@@ -5,15 +5,15 @@ module.exports = function Home(props) {
 	const title = "Food Inventory";
 	return (
 		<Default title={title}>
-			<main>
-				<header>
-					<h1>{title}</h1>
-				</header>
+			<header>
+				<h1>{title}</h1>
 				<p>
 					An inventory of the food you might have in your house, along
 					with recipes for using all that food!
 				</p>
 				<hr />
+			</header>
+			<main>
 				<h4>The inventory currently has:</h4>
 				<ul>
 					<li>
