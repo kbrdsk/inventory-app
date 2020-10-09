@@ -2,7 +2,7 @@ const React = require("react");
 const Default = require("./default");
 
 module.exports = function ItemList(props) {
-	const title = "Item List";
+	const title = props.title || "Food Items";
 	return (
 		<Default title={title}>
 			<header>

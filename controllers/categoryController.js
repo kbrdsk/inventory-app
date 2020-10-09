@@ -1,4 +1,5 @@
 const Category = require("../models/category");
+const Item = require("../models/item");
 const { body, validationResult } = require("express-validator/check");
 const { sanitizeBody } = require("express-validator/filter");
 
@@ -14,8 +15,24 @@ module.exports.list = {
 };
 
 module.exports.detail = {
-	get(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Category Detail");
+	async get(req, res, next) {
+		try {
+			const [category, item_list] = await Promise.all([
+				Category.findById(req.params.id),
+				Item.find({ categories: req.params.id }, "name stock"),
+			]);
+			if (category === null) {
+				const error = new Error("Category not found.");
+				error.status = 404;
+				next(error);
+			}
+			res.render("itemList", {
+				title: `Category: ${category.name}`,
+				item_list,
+			});
+		} catch (error) {
+			res.render("categoryList", { error });
+		}
 	},
 };
 
