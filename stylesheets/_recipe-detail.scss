@@ -36,4 +36,9 @@ ul.ingredients{
 
 ol.instructions{
 	list-style-position: inside;
+	padding: 0.2em;
+
+	li{
+		padding: 0.1em;
+	}
 }
