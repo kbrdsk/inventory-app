@@ -11,11 +11,11 @@ ul.recipe-list {
 			color: #000;
 			padding: 2em;
 			border-radius: 0.5em;
-			border: 2px solid #015;
+			border: 2px solid $link-color;
 			position: relative;
 
 			&:hover{
-				background-color: change-color($link-color, $alpha: 0.2);
+				background-color: #ddd;
 			}
 
 			span {
