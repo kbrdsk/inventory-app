@@ -13,17 +13,24 @@ ul.ingredients{
 	margin-top: 0;
 
 	li{
-		display: flex;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: 2fr 2fr 1fr;
 		padding: 0.2em;
 
-		span.amount{
-			margin-left: 2em;
+		span{
+			&.amount{
+				justify-self: end;
+			}
+			&.stock{
+				padding-left: 0.5em;
+				@include stock-color;
+			}
 		}
 
 		&:hover{
 			background-color: #ddd;
 		}
+
 	}
 }
 

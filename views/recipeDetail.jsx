@@ -50,6 +50,9 @@ function renderIngredient({ item, amount }) {
 				{item.name}
 			</a>
 			<span className="amount">{amount}</span>
+			<span className="stock" stock={item.stock}>
+				{item.stock}
+			</span>
 		</li>
 	);
 }
