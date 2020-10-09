@@ -1,0 +1,35 @@
+ul.item-list{
+	display: inline-block;
+	li{
+		display: flex;
+		justify-content: space-between;
+		padding: 0.2em;
+
+		span{
+			margin: 0 1em;
+
+			&.stock{
+				&[stock="Out"]{
+					color: red;
+				}
+				&[stock="Low"]{
+					color: orange;
+				}
+				&[stock="Medium"]{
+					color: yellow;
+				}
+				&[stock="Full"]{
+					color: green;
+				}
+			}
+		}
+
+		&:nth-child(odd){
+			background-color: #eee;
+		}
+
+		&:hover{
+			background-color: #ddd;
+		}
+	}
+}

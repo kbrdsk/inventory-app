@@ -3,11 +3,15 @@ const { body, validationResult } = require("express-validator/check");
 const { sanitizeBody } = require("express-validator/filter");
 
 module.exports.list = {
-	get(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Item List");
+	async get(req, res, next) {
+		try {
+			const item_list = await Item.find({});
+			res.render("itemList", { item_list });
+		} catch (error) {
+			res.render("itemList", { error });
+		}
 	},
 };
-
 
 module.exports.detail = {
 	get(req, res, next) {
