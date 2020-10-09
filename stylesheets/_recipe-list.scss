@@ -1,6 +1,9 @@
 ul.recipe-list {
 	list-style: none;
 	padding: 1em;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
 
 	li {
 		a {
