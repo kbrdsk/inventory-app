@@ -14,4 +14,8 @@ const ItemSchema = new Schema({
 	vegan: { type: Boolean, required: true },
 });
 
+ItemSchema.virtual("url").get(function () {
+	return `/inventory/item/${this._id}`;
+});
+
 module.exports = mongoose.model("Item", ItemSchema);

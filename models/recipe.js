@@ -15,4 +15,8 @@ const RecipeSchema = new Schema({
 	vegan: { type: Boolean, required: true },
 });
 
+RecipeSchema.virtual("url").get(function () {
+	return `/inventory/recipe/${this._id}`;
+});
+
 module.exports = mongoose.model("Recipe", RecipeSchema);
