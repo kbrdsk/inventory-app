@@ -1,5 +1,8 @@
+$link-color: #00b7ff;
+
 @import "./nav";
 @import "./item-list";
+@import "./recipe-list";
 
 body {
 	padding: 1em;
@@ -11,7 +14,7 @@ body {
 }
 
 a {
-	color: #00b7ff;
+	color: $link-color;
 }
 
 a.discreet {
