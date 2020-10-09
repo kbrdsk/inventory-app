@@ -28,23 +28,13 @@ function NavBar(props) {
 					<a href="/inventory">Home</a>
 				</li>
 				<li>
-					<a href="/inventory/item">Food Item</a>
+					<a href="/inventory/item">Food Items</a>
 				</li>
 				<li>
 					<a href="/inventory/category">Categories</a>
 				</li>
 				<li>
 					<a href="/inventory/recipe">Recipes</a>
-				</li>
-				<hr />
-				<li>
-					<a href="/inventory/item/create">Create New Food Item</a>
-				</li>
-				<li>
-					<a href="/inventory/category/create">Create New Category</a>
-				</li>
-				<li>
-					<a href="/inventory/recipe/create">Create New Recipe</a>
 				</li>
 			</ul>
 		</nav>
