@@ -18,7 +18,7 @@ module.exports = function CategoryList(props) {
 function renderCategory(category) {
 	return (
 		<li>
-			<a href={`/category/${category._id}`}>{category.name}</a>
+			<a href={category.url}>{category.name}</a>
 		</li>
 	);
 }
