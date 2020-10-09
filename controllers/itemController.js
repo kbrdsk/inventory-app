@@ -5,7 +5,7 @@ const { sanitizeBody } = require("express-validator/filter");
 module.exports.list = {
 	async get(req, res, next) {
 		try {
-			const item_list = await Item.find({});
+			const item_list = await Item.find({}, "name stock");
 			res.render("itemList", { item_list });
 		} catch (error) {
 			res.render("itemList", { error });
