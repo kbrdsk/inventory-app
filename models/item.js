@@ -1,3 +1,4 @@
+const moment = require("moment");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -17,5 +18,9 @@ const ItemSchema = new Schema({
 ItemSchema.virtual("url").get(function () {
 	return `/inventory/item/${this._id}`;
 });
+
+ItemSchema.virtual("formatted_expiration").get(function () {
+	return moment(this.expiration).format("MMMM DD YYYY")
+})
 
 module.exports = mongoose.model("Item", ItemSchema);

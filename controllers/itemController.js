@@ -14,8 +14,20 @@ module.exports.list = {
 };
 
 module.exports.detail = {
-	get(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Item Detail");
+	async get(req, res, next) {
+		try {
+			const item = await Item.findById(req.params.id).populate(
+				"categories"
+			);
+			if (item === null) {
+				const error = new Error("Item not found");
+				error.status = 404;
+				next(error);
+			}
+			res.render("itemDetail", { item });
+		} catch (error) {
+			res.render("itemDetail", { error });
+		}
 	},
 };
 
