@@ -1,0 +1,25 @@
+input {
+	margin-top: 0.7em;
+	&[type="submit"] {
+		border: none;
+		padding: 0.5em 0.8em;
+		border-radius: 0.3em;
+		cursor: pointer;
+		background-color: transparentize($link-color, 0.5);
+
+		&:hover {
+			background-color: transparentize($link-color, 0.3);
+		}
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	&[type="text"] {
+		border: solid 1px #015;
+		border-radius: 0.3em;
+		padding: 0.5em;
+		padding-bottom: 0.3em;
+	}
+}

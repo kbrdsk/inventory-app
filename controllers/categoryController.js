@@ -38,7 +38,7 @@ module.exports.detail = {
 
 module.exports.create = {
 	get(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Category Create Get");
+		res.render("categoryCreate");
 	},
 	post(req, res, next) {
 		res.send("TO BE IMPLEMENTED: Category Create Post");

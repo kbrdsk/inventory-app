@@ -11,6 +11,9 @@ module.exports = function CategoryList(props) {
 			<main>
 				<ul>{props.category_list.map(renderCategory)}</ul>
 			</main>
+			<footer>
+				<a href="/inventory/category/create">New Category</a>
+			</footer>
 		</Default>
 	);
 };
