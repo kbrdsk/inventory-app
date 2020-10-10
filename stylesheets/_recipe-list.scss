@@ -4,6 +4,8 @@ ul.recipe-list {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	align-items: flex-start;
+	height: 50vh;
 
 	li {
 		a {
@@ -13,6 +15,7 @@ ul.recipe-list {
 			border-radius: 0.5em;
 			border: 2px solid $link-color;
 			position: relative;
+			margin: 0.5em;
 
 			&:hover{
 				background-color: #ddd;
