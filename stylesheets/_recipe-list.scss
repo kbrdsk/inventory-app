@@ -5,10 +5,10 @@ ul.recipe-list {
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-items: flex-start;
-	height: 50vh;
 
 	li {
 		a {
+			display: block;
 			text-decoration: none;
 			color: #000;
 			padding: 2em;
