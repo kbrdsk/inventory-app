@@ -9,7 +9,7 @@ module.exports = function CategoryList(props) {
 				<h1>{title}</h1>
 			</header>
 			<main>
-				<ul>{props.category_list.map(renderCategory)}</ul>
+				<ul className="recipe-list">{props.category_list.map(renderCategory)}</ul>
 			</main>
 			<footer>
 				<a href="/inventory/category/create">New Category</a>
