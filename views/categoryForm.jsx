@@ -12,7 +12,7 @@ module.exports = function CategoryForm(props) {
 			{props.errors ? <ul>{props.errors.map(renderError)}</ul> : null}
 			<form method="POST" action="" className="create-update">
 				<div className="form-group">
-					<label htmlFor="name">Category Name: </label>
+					<label htmlFor="name">Name: </label>
 					<input
 						type="text"
 						name="name"
