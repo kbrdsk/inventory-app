@@ -1,7 +1,7 @@
 const React = require("react");
 const Default = require("./default");
 
-module.exports = function CategoryCreate(props) {
+module.exports = function CategoryForm(props) {
 	const category = props.category;
 	const title = category
 		? `Update Category: ${category.name}`
