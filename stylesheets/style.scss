@@ -1,6 +1,6 @@
 $link-color: #00b7ff;
 
-@mixin stock-color{
+@mixin stock-color {
 	&[stock="Out"] {
 		color: red;
 	}
@@ -20,6 +20,7 @@ $link-color: #00b7ff;
 @import "./recipe-list";
 @import "./recipe-detail";
 @import "./form";
+@import "./crud-container";
 
 body {
 	padding: 1em;
@@ -32,16 +33,17 @@ body {
 
 a {
 	color: $link-color;
-}
 
-a.discreet {
-	color: #000;
-	text-decoration: none;
+	&.discreet {
+		color: #000;
+		text-decoration: none;
+	}
 }
 
 header {
 	h1 {
 		color: #016;
+		display: inline-block;
 	}
 }
 

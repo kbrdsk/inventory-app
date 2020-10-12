@@ -1,0 +1,37 @@
+span.crud-container {
+	&.category {
+		position: relative;
+		top: -0.3em;
+		left: 0.3em;
+	}
+	a.crud-button {
+		border: none;
+		padding: 0.5em 0.8em;
+		border-radius: 0.3em;
+		cursor: pointer;
+		text-decoration: none;
+		color: #000;
+		margin: 0.5em;
+		font-size: 0.7em;
+
+		&:focus {
+			outline: none;
+		}
+
+		&.update {
+			background-color: #8a2be277;
+
+			&:hover {
+				background-color: #8a2be2;
+			}
+		}
+
+		&.delete {
+			background-color: #dc143c77;
+
+			&:hover {
+				background-color: #dc143c;
+			}
+		}
+	}
+}

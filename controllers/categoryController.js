@@ -28,6 +28,7 @@ module.exports.detail = {
 			res.render("itemList", {
 				title: `Category: ${category.name}`,
 				item_list,
+				category,
 			});
 		} catch (error) {
 			res.render("categoryList", { error });

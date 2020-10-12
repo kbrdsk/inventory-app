@@ -29,7 +29,7 @@ for (let collection of ["item", "recipe", "category"]) {
 	for (let crudVal of ["create", "update", "delete"]) {
 		for (let method of ["get", "post"]) {
 			collectionRouter[method](
-				`/${crudVal}`,
+				`${crudVal === "create" ? "/" : "/:id/"}${crudVal}`,
 				controllers[collection][crudVal][method]
 			);
 		}
