@@ -38,7 +38,7 @@ module.exports.detail = {
 
 module.exports.create = {
 	get(req, res, next) {
-		res.render("categoryCreate");
+		res.render("categoryForm");
 	},
 	post: [
 		validator
@@ -51,7 +51,7 @@ module.exports.create = {
 				const errors = validator.validationResult(req);
 				const category = new Category({ name: req.body.name });
 				if (!errors.isEmpty()) {
-					res.render("categoryCreate", {
+					res.render("categoryForm", {
 						category,
 						errors: errors.array(),
 					});
@@ -83,14 +83,43 @@ module.exports.update = {
 				error.status = 404;
 				next(error);
 			}
-			res.render("categoryCreate", { category });
+			res.render("categoryForm", { category });
 		} catch (error) {
 			res.render("categoryList", { error });
 		}
 	},
-	post(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Category Update Post");
-	},
+	post: [
+		validator
+			.body("name", "Category name is required.")
+			.trim()
+			.isLength({ min: 3 }),
+		validator.sanitizeBody("name").escape(),
+		async (req, res, next) => {
+			try {
+				const errors = validator.validationResult(req);
+				const category = new Category({ name: req.body.name });
+				if (!errors.isEmpty()) {
+					res.render("categoryForm", {
+						category,
+						errors: errors.array(),
+					});
+					return;
+				} else {
+					const found_category = await Category.findOne({
+						name: req.body.name,
+					});
+
+					if (found_category) res.redirect(found_category.url);
+					else {
+						await category.save();
+						res.redirect(category.url);
+					}
+				}
+			} catch (error) {
+				next(error);
+			}
+		},
+	],
 };
 
 module.exports.delete = {
