@@ -3,14 +3,13 @@ const Default = require("./default");
 
 module.exports = function CategoryForm(props) {
 	const category = props.category;
-	const title = category
-		? `Update Category: ${category.name}`
-		: "New Category";
+	const title = category ? `Update Category: ${props.title}` : "New Category";
 	return (
 		<Default title={title}>
 			<header>
 				<h1>{title}</h1>
 			</header>
+			{props.errors ? <ul>{props.errors.map(renderError)}</ul> : null}
 			<form method="POST" action="">
 				<div className="form-group">
 					<label htmlFor="name">Category Name: </label>
@@ -27,3 +26,7 @@ module.exports = function CategoryForm(props) {
 		</Default>
 	);
 };
+
+function renderError(error) {
+	return <li className="form-error">{error.msg}</li>;
+}

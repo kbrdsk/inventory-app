@@ -83,7 +83,7 @@ module.exports.update = {
 				error.status = 404;
 				next(error);
 			}
-			res.render("categoryForm", { category });
+			res.render("categoryForm", { category, title: category.name });
 		} catch (error) {
 			res.render("categoryList", { error });
 		}
@@ -97,7 +97,11 @@ module.exports.update = {
 		async (req, res, next) => {
 			try {
 				const errors = validator.validationResult(req);
-				const category = new Category({ name: req.body.name });
+				const title = (await Category.findById(req.params.id)).name;
+				const category = new Category({
+					name: req.body.name,
+					_id: req.params.id,
+				});
 				if (!errors.isEmpty()) {
 					res.render("categoryForm", {
 						category,
@@ -109,9 +113,19 @@ module.exports.update = {
 						name: req.body.name,
 					});
 
-					if (found_category) res.redirect(found_category.url);
-					else {
-						await category.save();
+					if (found_category) {
+						const error = new Error("Category exists");
+						error.msg = "A category with that name already exists";
+						res.render("categoryForm", {
+							category,
+							title,
+							errors: [error],
+						});
+					} else {
+						const updatedCategory = await Category.findByIdAndUpdate(
+							req.params.id,
+							category
+						);
 						res.redirect(category.url);
 					}
 				}
