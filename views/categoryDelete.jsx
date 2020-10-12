@@ -20,6 +20,11 @@ module.exports = function CategoryDelete(props) {
 			) : (
 				<form method="POST" action="" className="delete">
 					<p>Are you sure you want to delete this category?</p>
+					<input
+						type="hidden"
+						name="categoryid"
+						value={category._id}
+					/>
 					<input type="submit" value="Delete" />
 				</form>
 			)}

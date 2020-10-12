@@ -138,17 +138,37 @@ module.exports.update = {
 
 module.exports.delete = {
 	async get(req, res, next) {
-		const [category, category_items] = await Promise.all([
-			Category.findById(req.params.id),
-			Item.find({ categories: req.params.id }),
-		]);
-		if (category === null) res.redirect("/inventory/category");
-		res.render("categoryDelete", {
-			category,
-			category_items,
-		});
+		try {
+			const [category, category_items] = await Promise.all([
+				Category.findById(req.params.id),
+				Item.find({ categories: req.params.id }),
+			]);
+			if (category === null) res.redirect("/inventory/category");
+			res.render("categoryDelete", {
+				category,
+				category_items,
+			});
+		} catch (error) {
+			next(error);
+		}
 	},
 	async post(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Category Delete Post");
+		try {
+			const [category, category_items] = await Promise.all([
+				Category.findById(req.body.categoryid),
+				Item.find({ categories: req.body.categoryid }),
+			]);
+			if (category_items.length > 0) {
+				res.render("categoryDelete", {
+					category,
+					category_items,
+				});
+			} else {
+				await Category.findByIdAndRemove(req.body.categoryid);
+				res.redirect("/inventory/category");
+			}
+		} catch (error) {
+			next(error);
+		}
 	},
 };
