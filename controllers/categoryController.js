@@ -137,10 +137,18 @@ module.exports.update = {
 };
 
 module.exports.delete = {
-	get(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Category Delete Get");
+	async get(req, res, next) {
+		const [category, category_items] = await Promise.all([
+			Category.findById(req.params.id),
+			Item.find({ categories: req.params.id }),
+		]);
+		if (category === null) res.redirect("/inventory/category");
+		res.render("categoryDelete", {
+			category,
+			category_items,
+		});
 	},
-	post(req, res, next) {
+	async post(req, res, next) {
 		res.send("TO BE IMPLEMENTED: Category Delete Post");
 	},
 };

@@ -30,3 +30,17 @@ form.create-update {
 		}
 	}
 }
+
+form.delete {
+	input[type="submit"] {
+		border: none;
+		padding: 0.5em 0.8em;
+		border-radius: 0.3em;
+		cursor: pointer;
+		background-color: #dc143c77;
+
+		&:hover {
+			background-color: #dc143c;
+		}
+	}
+}
