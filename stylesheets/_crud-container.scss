@@ -3,35 +3,44 @@ span.crud-container {
 		position: relative;
 		top: -0.3em;
 		left: 0.3em;
-	}
-	a.crud-button {
-		border: none;
-		padding: 0.5em 0.8em;
-		border-radius: 0.3em;
-		cursor: pointer;
-		text-decoration: none;
-		color: #000;
-		margin: 0.5em;
 		font-size: 0.7em;
+	}
+}
 
-		&:focus {
-			outline: none;
+a.crud-button {
+	border: none;
+	padding: 0.5em 0.8em;
+	border-radius: 0.3em;
+	cursor: pointer;
+	text-decoration: none;
+	color: #000;
+	margin: 0.5em;
+
+	&:focus {
+		outline: none;
+	}
+
+	&.update {
+		background-color: #8a2be277;
+
+		&:hover {
+			background-color: #8a2be2;
 		}
+	}
 
-		&.update {
-			background-color: #8a2be277;
+	&.delete {
+		background-color: #dc143c77;
 
-			&:hover {
-				background-color: #8a2be2;
-			}
+		&:hover {
+			background-color: #dc143c;
 		}
+	}
 
-		&.delete {
-			background-color: #dc143c77;
+	&.create {
+		background-color: transparentize($link-color, 0.5);
 
-			&:hover {
-				background-color: #dc143c;
-			}
+		&:hover {
+			background-color: transparentize($link-color, 0.3);
 		}
 	}
 }
