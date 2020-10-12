@@ -2,7 +2,10 @@ const React = require("react");
 const Default = require("./default");
 
 module.exports = function CategoryCreate(props) {
-	const title = "New Category";
+	const category = props.category;
+	const title = category
+		? `Update Category: ${category.name}`
+		: "New Category";
 	return (
 		<Default title={title}>
 			<header>
@@ -16,6 +19,7 @@ module.exports = function CategoryCreate(props) {
 						name="name"
 						id="name"
 						placeholder="Produce, Supplements, etc."
+						value={category ? category.name : null}
 					/>
 				</div>
 				<input type="submit" value="Submit" />

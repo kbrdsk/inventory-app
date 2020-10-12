@@ -75,8 +75,18 @@ module.exports.create = {
 };
 
 module.exports.update = {
-	get(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Category Update Get");
+	async get(req, res, next) {
+		try {
+			const category = await Category.findById(req.params.id);
+			if (category === null) {
+				const error = new Error("Category not found.");
+				error.status = 404;
+				next(error);
+			}
+			res.render("categoryCreate", { category });
+		} catch (error) {
+			res.render("categoryList", { error });
+		}
 	},
 	post(req, res, next) {
 		res.send("TO BE IMPLEMENTED: Category Update Post");
