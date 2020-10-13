@@ -12,7 +12,7 @@ module.exports = function CategoryDelete(props) {
 				<h1>{title}</h1>
 			</header>
 			{categoryItems ? (
-				<ul className="items-to-be-deleted">
+				<ul className="to-be-deleted items">
 					This category must be removed from the following items
 					before it can be deleted:
 					{categoryItems.map(renderItem)}

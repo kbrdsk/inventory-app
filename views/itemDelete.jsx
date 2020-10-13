@@ -12,7 +12,7 @@ module.exports = function CategoryDelete(props) {
 				<h1>{title}</h1>
 			</header>
 			{itemRecipes ? (
-				<ul className="recipes-to-be-deleted">
+				<ul className="to-be-deleted recipes">
 					The following recipes must be edited or deleted before you
 					can delete this item:
 					{itemRecipes.map(renderRecipe)}
