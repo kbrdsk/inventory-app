@@ -37,8 +37,9 @@ module.exports.detail = {
 };
 
 module.exports.create = {
-	get(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Recipe Create Get");
+	async get(req, res, next) {
+		const items = await Item.find();
+		res.render("recipeForm", { items });
 	},
 	post(req, res, next) {
 		res.send("TO BE IMPLEMENTED: Recipe Create Post");

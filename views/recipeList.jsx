@@ -13,6 +13,14 @@ module.exports = function RecipeList(props) {
 					{props.recipe_list.map(renderRecipe)}
 				</ul>
 			</main>
+			<footer>
+				<a
+					href="/inventory/recipe/create"
+					className="crud-button create"
+				>
+					New Recipe
+				</a>
+			</footer>
 		</Default>
 	);
 };
