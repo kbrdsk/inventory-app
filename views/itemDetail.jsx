@@ -26,6 +26,7 @@ module.exports = function ItemDetail(props) {
 				) : null}
 				<p>{item.vegan ? "Vegan" : "Not Vegan"}</p>
 			</main>
+			<CRUDButtons item={item} />
 		</Default>
 	);
 };
@@ -42,4 +43,18 @@ function displayCategories(categories) {
 
 function renderCategory(category) {
 	return <a href={category.url}>{category.name}</a>;
+}
+
+function CRUDButtons(props) {
+	const item = props.item;
+	return (
+		<footer className="crud-container item">
+			<a href={item.url + "/update"} className="update crud-button">
+				Update
+			</a>
+			<a href={item.url + "/delete"} className="delete crud-button">
+				Delete
+			</a>
+		</footer>
+	);
 }

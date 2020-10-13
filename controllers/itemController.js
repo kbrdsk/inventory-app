@@ -35,16 +35,37 @@ module.exports.detail = {
 module.exports.create = {
 	async get(req, res, next) {
 		const categories = await Category.find({});
-		res.render("itemForm", {categories});
+		res.render("itemForm", { categories });
 	},
-	post(req, res, next) {
+	async post(req, res, next) {
 		res.send("TO BE IMPLEMENTED: Item Create Post");
 	},
 };
 
 module.exports.update = {
-	get(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Item Update Get");
+	async get(req, res, next) {
+		try {
+			const item = await Item.findById(req.params.id).populate(
+				"categories"
+			);
+			if (item === null) {
+				const error = new Error("Item not found.");
+				error.status = 404;
+				next(error);
+			}
+			const categories = await Category.find({});
+			categories.forEach((category) => {
+				if (
+					item.categories.some(
+						(cat) => cat._id.toString() === category._id.toString()
+					)
+				)
+					category.checked = true;
+			});
+			res.render("itemForm", { categories, item, title: item.name });
+		} catch (error) {
+			res.render("itemDetail", { item, error });
+		}
 	},
 	post(req, res, next) {
 		res.send("TO BE IMPLEMENTED: Item Update Post");

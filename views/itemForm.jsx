@@ -17,9 +17,9 @@ module.exports = function ItemForm(props) {
 						type="text"
 						name="name"
 						id="name"
-						required="true"
+						required={true}
 						placeholder="Tofu, Broccoli, etc."
-						value={item ? item.name : null}
+						defaultValue={item ? item.name : null}
 					/>
 				</div>
 				<div className="form-group">
@@ -27,11 +27,13 @@ module.exports = function ItemForm(props) {
 					<select
 						name="stock"
 						id="stock"
-						required="true"
-						value={item ? item.name : null}
+						required={true}
+						defaultValue={item ? item.stock : null}
 					>
 						{["Out", "Low", "Medium", "Full"].map((stockValue) => (
-							<option value={stockValue}>{stockValue}</option>
+							<option key={stockValue} value={stockValue}>
+								{stockValue}
+							</option>
 						))}
 					</select>
 				</div>
@@ -45,7 +47,7 @@ module.exports = function ItemForm(props) {
 						type="date"
 						name="expiration"
 						id="expiration"
-						value={item ? item.expiration : null}
+						defaultValue={item ? item.expiration : null}
 					/>
 				</div>
 				<div className="form-group">
@@ -54,8 +56,7 @@ module.exports = function ItemForm(props) {
 						type="checkbox"
 						name="vegan"
 						id="vegan"
-						value="vegan"
-						checked={item ? item.vegan : null}
+						defaultChecked={item ? item.vegan : null}
 					/>
 				</div>
 				<input type="submit" value="Submit" />
@@ -74,9 +75,9 @@ function renderCategoryInput(item, category) {
 			<input
 				type="checkbox"
 				name="categories"
+				key={category._id}
 				id={category._id}
-				checked={category.checked}
-				value={category._id}
+				defaultChecked={category.checked}
 			/>
 			<label htmlFor={category._id}>{category.name}</label>
 		</span>
