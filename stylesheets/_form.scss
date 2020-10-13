@@ -4,8 +4,9 @@ li.form-error {
 }
 
 form.create-update {
-	input {
+	input, select{
 		margin-top: 0.7em;
+
 		&[type="submit"] {
 			border: none;
 			padding: 0.5em 0.8em;
@@ -22,7 +23,7 @@ form.create-update {
 			}
 		}
 
-		&[type="text"] {
+		&[type="text"]{
 			border: solid 1px #015;
 			border-radius: 0.3em;
 			padding: 0.5em;

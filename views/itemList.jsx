@@ -14,6 +14,16 @@ module.exports = function ItemList(props) {
 			<main>
 				<ul className="item-list">{props.item_list.map(renderItem)}</ul>
 			</main>
+			{props.category ? null : (
+				<footer>
+					<a
+						href="/inventory/item/create"
+						className="crud-button create"
+					>
+						New Item
+					</a>
+				</footer>
+			)}
 		</Default>
 	);
 };

@@ -1,4 +1,5 @@
 const Item = require("../models/item");
+const Category = require("../models/category");
 const { body, validationResult } = require("express-validator/check");
 const { sanitizeBody } = require("express-validator/filter");
 
@@ -32,8 +33,9 @@ module.exports.detail = {
 };
 
 module.exports.create = {
-	get(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Item Create Get");
+	async get(req, res, next) {
+		const categories = await Category.find({});
+		res.render("itemForm", {categories});
 	},
 	post(req, res, next) {
 		res.send("TO BE IMPLEMENTED: Item Create Post");
