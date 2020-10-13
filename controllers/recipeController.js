@@ -21,8 +21,8 @@ module.exports.detail = {
 				path: "ingredients",
 				populate: {
 					path: "item",
-					model: "Item"
-				}
+					model: "Item",
+				},
 			});
 			if (recipe === null) {
 				const error = new Error("Recipe not found");
@@ -55,10 +55,12 @@ module.exports.update = {
 };
 
 module.exports.delete = {
-	get(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Recipe Delete Get");
+	async get(req, res, next) {
+		const recipe = await Recipe.findById(req.params.id);
+		res.render("recipeDelete", { recipe });
 	},
-	post(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Recipe Delete Post");
+	async post(req, res, next) {
+		await Recipe.findByIdAndDelete(req.params.id);
+		res.redirect("/inventory/recipe");
 	},
 };
