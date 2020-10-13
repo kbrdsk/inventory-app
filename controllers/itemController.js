@@ -147,7 +147,23 @@ module.exports.delete = {
 			next(error);
 		}
 	},
-	post(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Item Delete Post");
+	async post(req, res, next) {
+		try {
+			const [item, item_recipes] = await Promise.all([
+				Item.findById(req.params.id),
+				Recipe.find({ "ingredients.item": req.params.id }),
+			]);
+			if (item_recipes.length > 0) {
+				res.render("itemDelete", {
+					item,
+					item_recipes,
+				});
+			} else {
+				await Item.findByIdAndRemove(req.body.itemid);
+				res.redirect("/inventory/item");
+			}
+		} catch (error) {
+			next(error);
+		}
 	},
 };
