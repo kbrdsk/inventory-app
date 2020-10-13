@@ -35,6 +35,8 @@ module.exports = function RecipeDetail(props) {
 					{recipe.instructions.map(renderStep)}
 				</ol>
 			</main>
+
+			<CRUDButtons recipe={recipe} />
 		</Default>
 	);
 };
@@ -56,3 +58,18 @@ function renderIngredient({ item, amount }) {
 		</li>
 	);
 }
+
+function CRUDButtons(props) {
+	const recipe = props.recipe;
+	return (
+		<footer className="crud-container recipe">
+			<a href={recipe.url + "/update"} className="update crud-button">
+				Update
+			</a>
+			<a href={recipe.url + "/delete"} className="delete crud-button">
+				Delete
+			</a>
+		</footer>
+	);
+}
+
