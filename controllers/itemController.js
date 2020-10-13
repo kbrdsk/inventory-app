@@ -1,5 +1,6 @@
 const Item = require("../models/item");
 const Category = require("../models/category");
+const Recipe = require("../models/recipe");
 const { body, validationResult } = require("express-validator/check");
 const { sanitizeBody } = require("express-validator/filter");
 
@@ -73,8 +74,20 @@ module.exports.update = {
 };
 
 module.exports.delete = {
-	get(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Item Delete Get");
+	async get(req, res, next) {
+		try {
+			const [item, item_recipes] = await Promise.all([
+				Item.findById(req.params.id),
+				Recipe.find({ "ingredients.item": req.params.id }),
+			]);
+			if (item === null) res.redirect("/inventory/item");
+			res.render("itemDelete", {
+				item,
+				item_recipes,
+			});
+		} catch (error) {
+			next(error);
+		}
 	},
 	post(req, res, next) {
 		res.send("TO BE IMPLEMENTED: Item Delete Post");
