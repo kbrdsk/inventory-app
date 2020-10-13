@@ -39,7 +39,7 @@ module.exports.create = {
 	},
 	post: [
 		(req, res, next) => {
-			if (!(Array.isArray(req.body.categories))) {
+			if (!Array.isArray(req.body.categories)) {
 				if (typeof req.body.categories === "undefined")
 					req.body.categories = [];
 				else req.body.categories = new Array(req.body.categories);
@@ -121,14 +121,85 @@ module.exports.update = {
 				)
 					category.checked = true;
 			});
-			res.render("itemForm", { categories, item, title: item.name });
+			res.render("itemForm", {
+				categories,
+				item,
+				title: item.name,
+				updating: true,
+			});
 		} catch (error) {
 			res.render("itemDetail", { item, error });
 		}
 	},
-	post(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Item Update Post");
-	},
+	post: [
+		(req, res, next) => {
+			if (!Array.isArray(req.body.categories)) {
+				if (typeof req.body.categories === "undefined")
+					req.body.categories = [];
+				else req.body.categories = new Array(req.body.categories);
+			}
+			next();
+		},
+
+		//validation
+		validator
+			.body("name", "Name must not be empty.")
+			.trim()
+			.isLength({ min: 1 }),
+		validator
+			.body("stock", "Stock must not be empty.")
+			.trim()
+			.isLength({ min: 1 }),
+		validator
+			.body(
+				"expiration",
+				"Items in stock must have a valid expiration date."
+			)
+			.if((value, { req }) => req.body.stock !== "Out")
+			.isISO8601(),
+
+		//sanitization
+		validator.body("name").escape(),
+		validator.body("expiration").toDate(),
+
+		async (req, res, next) => {
+			try {
+				const errors = validator.validationResult(req);
+				const title = (await Item.findById(req.params.id)).name;
+				const item = new Item({
+					name: req.body.name,
+					stock: req.body.stock,
+					categories: req.body.categories,
+					expiration: req.body.expiration,
+					vegan: req.body.vegan === "on",
+					_id: req.params.id,
+				});
+				if (!errors.isEmpty()) {
+					const categories = await Category.find();
+					categories.forEach((category) => {
+						if (item.categories.includes(category._id.toString()))
+							category.checked = true;
+					});
+					res.render("itemForm", {
+						item,
+						categories,
+						title,
+						errors: errors.array(),
+						updating: true,
+					});
+					return;
+				} else {
+					const updatedItem = await Item.findByIdAndUpdate(
+						req.params.id,
+						item
+					);
+					res.redirect(updatedItem.url);
+				}
+			} catch (error) {
+				next(error);
+			}
+		},
+	],
 };
 
 module.exports.delete = {

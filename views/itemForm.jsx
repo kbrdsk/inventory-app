@@ -3,7 +3,7 @@ const Default = require("./default");
 
 module.exports = function ItemForm(props) {
 	const item = props.item;
-	const title = item ? `Update Item: ${props.title}` : "New Item";
+	const title = props.updating ? `Update Item: ${props.title}` : "New Item";
 	return (
 		<Default title={title}>
 			<header>
