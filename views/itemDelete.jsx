@@ -1,7 +1,7 @@
 const React = require("react");
 const Default = require("./default");
 
-module.exports = function CategoryDelete(props) {
+module.exports = function ItemDelete(props) {
 	const item = props.item;
 	const itemRecipes =
 		props.item_recipes.length > 0 ? props.item_recipes : null;
