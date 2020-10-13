@@ -66,17 +66,21 @@ module.exports = function ItemForm(props) {
 };
 
 function renderError(error) {
-	return <li className="form-error">{error.msg}</li>;
+	return (
+		<li className="form-error" key={error.msg}>
+			{error.msg}
+		</li>
+	);
 }
 
 function renderCategoryInput(item, category) {
 	return (
-		<span>
+		<span key={category._id}>
 			<input
 				type="checkbox"
 				name="categories"
-				key={category._id}
 				id={category._id}
+				value={category._id}
 				defaultChecked={category.checked}
 			/>
 			<label htmlFor={category._id}>{category.name}</label>

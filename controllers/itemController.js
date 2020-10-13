@@ -1,8 +1,7 @@
 const Item = require("../models/item");
 const Category = require("../models/category");
 const Recipe = require("../models/recipe");
-const { body, validationResult } = require("express-validator/check");
-const { sanitizeBody } = require("express-validator/filter");
+const validator = require("express-validator");
 
 module.exports.list = {
 	async get(req, res, next) {
@@ -35,12 +34,71 @@ module.exports.detail = {
 
 module.exports.create = {
 	async get(req, res, next) {
-		const categories = await Category.find({});
+		const categories = await Category.find();
 		res.render("itemForm", { categories });
 	},
-	async post(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Item Create Post");
-	},
+	post: [
+		(req, res, next) => {
+			if (!(Array.isArray(req.body.categories))) {
+				if (typeof req.body.categories === "undefined")
+					req.body.categories = [];
+				else req.body.categories = new Array(req.body.categories);
+			}
+			next();
+		},
+
+		//validation
+		validator
+			.body("name", "Name must not be empty.")
+			.trim()
+			.isLength({ min: 1 }),
+		validator
+			.body("stock", "Stock must not be empty.")
+			.trim()
+			.isLength({ min: 1 }),
+		validator
+			.body(
+				"expiration",
+				"Items in stock must have a valid expiration date."
+			)
+			.if((value, { req }) => req.body.stock !== "Out")
+			.isISO8601(),
+
+		//sanitization
+		validator.body("name").escape(),
+		validator.body("expiration").toDate(),
+
+		async (req, res, next) => {
+			try {
+				const errors = validator.validationResult(req);
+				const item = new Item({
+					name: req.body.name,
+					stock: req.body.stock,
+					categories: req.body.categories,
+					expiration: req.body.expiration,
+					vegan: req.body.vegan === "on",
+				});
+				if (!errors.isEmpty()) {
+					const categories = await Category.find();
+					categories.forEach((category) => {
+						if (item.categories.includes(category._id.toString()))
+							category.checked = true;
+					});
+					res.render("itemForm", {
+						item,
+						categories,
+						errors: errors.array(),
+					});
+					return;
+				} else {
+					await item.save();
+					res.redirect(item.url);
+				}
+			} catch (error) {
+				next(error);
+			}
+		},
+	],
 };
 
 module.exports.update = {
