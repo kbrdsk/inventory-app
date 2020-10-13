@@ -20,7 +20,11 @@ ItemSchema.virtual("url").get(function () {
 });
 
 ItemSchema.virtual("formatted_expiration").get(function () {
-	return moment(this.expiration).format("MMMM DD YYYY")
-})
+	return moment(this.expiration).format("MMMM DD YYYY");
+});
+
+ItemSchema.virtual("expiration_data").get(function () {
+	return moment(this.expiration).format("YYYY-MM-DD");
+});
 
 module.exports = mongoose.model("Item", ItemSchema);

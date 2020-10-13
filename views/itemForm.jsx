@@ -47,7 +47,7 @@ module.exports = function ItemForm(props) {
 						type="date"
 						name="expiration"
 						id="expiration"
-						defaultValue={item ? item.expiration : null}
+						defaultValue={item ? item.expiration_data : null}
 					/>
 				</div>
 				<div className="form-group">
