@@ -46,6 +46,7 @@ module.exports = function RecipeForm(props) {
 							type="number"
 							name="prep_time"
 							id="prep_time"
+							min="0"
 							defaultValue={recipe ? recipe.prep_time : null}
 						/>
 						{" minutes"}
@@ -58,6 +59,7 @@ module.exports = function RecipeForm(props) {
 							type="number"
 							name="cooking_time"
 							id="cooking_time"
+							min="0"
 							defaultValue={recipe ? recipe.cooking_time : null}
 						/>
 						{" minutes"}
@@ -101,10 +103,18 @@ function renderIngredient(recipe, item) {
 			</div>
 			<input
 				type="text"
-				name="amount"
+				name={item._id}
 				placeholder="amount"
 				className="amount"
+				value={recipe ? getIngredientAmount(recipe, item._id) : null}
 			/>
 		</div>
 	);
+}
+
+function getIngredientAmount(recipe, id) {
+	const itemIndex = recipe.ingredients.findIndex(
+		(ingredient) => ingredient.item.toString() === id.toString()
+	);
+	return itemIndex > -1 ? recipe.ingredients[itemIndex].amount : null;
 }

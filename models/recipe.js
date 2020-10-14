@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const RecipeItemSchema = new Schema({
 	item: { type: Schema.Types.ObjectId, ref: "Item", required: true },
-	amount: { type: String, required: true },
+	amount: { type: String },
 });
 
 const RecipeSchema = new Schema({

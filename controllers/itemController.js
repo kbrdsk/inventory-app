@@ -40,9 +40,9 @@ module.exports.create = {
 	post: [
 		(req, res, next) => {
 			if (!Array.isArray(req.body.categories)) {
-				if (typeof req.body.categories === "undefined")
-					req.body.categories = [];
-				else req.body.categories = new Array(req.body.categories);
+				req.body.categories = req.body.categories
+					? new Array(req.body.categories)
+					: [];
 			}
 			next();
 		},
