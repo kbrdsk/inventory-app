@@ -37,6 +37,7 @@ module.exports = function RecipeForm(props) {
 						id="instructions"
 						cols="50"
 						rows="10"
+						value={recipe ? recipe.instructions.join("\r\n") : null}
 					></textarea>
 				</div>
 				<div className="form-group time">
