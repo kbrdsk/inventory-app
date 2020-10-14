@@ -135,9 +135,77 @@ module.exports.update = {
 			res.render("recipeDetail", { recipe, error });
 		}
 	},
-	post(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Recipe Update Post");
-	},
+	post: [
+		(req, res, next) => {
+			if (!Array.isArray(req.body.ingredients)) {
+				req.body.ingredients = req.body.ingredients
+					? new Array(req.body.ingredients)
+					: [];
+			}
+			next();
+		},
+
+		//validation
+		validator
+			.body("name", "Name must not be empty.")
+			.trim()
+			.isLength({ min: 1 }),
+
+		//sanitization
+		validator.body("name").escape(),
+		validator.body("instructions").escape(),
+
+		async (req, res, next) => {
+			try {
+				const errors = validator.validationResult(req);
+				const title = (await Recipe.findById(req.params.id)).name;
+				const ingredients = req.body.ingredients.map((item) => {
+					return { item, amount: req.body[item] };
+				});
+				console.log(req.body.instructions);
+				const instructions = req.body.instructions.split("\r\n");
+				console.log(instructions);
+				const recipe = new Recipe({
+					name: req.body.name,
+					ingredients: ingredients,
+					instructions: instructions,
+					prep_time: req.body.prep_time,
+					cooking_time: req.body.cooking_time,
+					vegan: req.body.vegan === "on",
+					_id: req.params.id,
+				});
+				if (!errors.isEmpty()) {
+					const items = await Item.find();
+					items.forEach((item) => {
+						if (
+							recipe.ingredients.some(
+								(ingredient) =>
+									ingredient.item.toString() ===
+									item._id.toString()
+							)
+						)
+							item.checked = true;
+					});
+					res.render("recipeForm", {
+						recipe,
+						items,
+						title,
+						errors: errors.array(),
+						updating: true,
+					});
+					return;
+				} else {
+					const updatedRecipe = await Recipe.findByIdAndUpdate(
+						req.params.id,
+						recipe
+					);
+					res.redirect(updatedRecipe.url);
+				}
+			} catch (error) {
+				next(error);
+			}
+		},
+	],
 };
 
 module.exports.delete = {
