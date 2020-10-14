@@ -107,8 +107,33 @@ module.exports.create = {
 };
 
 module.exports.update = {
-	get(req, res, next) {
-		res.send("TO BE IMPLEMENTED: Recipe Update Get");
+	async get(req, res, next) {
+		try {
+			const recipe = await Recipe.findById(req.params.id);
+			if (recipe === null) {
+				const error = new Error("Recipe not found.");
+				error.status = 404;
+				next(error);
+			}
+			const items = await Item.find();
+			items.forEach((item) => {
+				if (
+					recipe.ingredients.some(
+						(ingredient) =>
+							ingredient.item.toString() === item._id.toString()
+					)
+				)
+					item.checked = true;
+			});
+			res.render("recipeForm", {
+				items,
+				recipe,
+				title: recipe.name,
+				updating: true,
+			});
+		} catch (error) {
+			res.render("recipeDetail", { recipe, error });
+		}
 	},
 	post(req, res, next) {
 		res.send("TO BE IMPLEMENTED: Recipe Update Post");
