@@ -4,6 +4,8 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const sassMiddleware = require("node-sass-middleware");
 const createError = require("http-errors");
+const compression = require("compression");
+const helmet = require("helmet");
 
 const inventoryRouter = require("./routes/inventory");
 
@@ -34,6 +36,10 @@ app.use(
 		sourceMap: true,
 	})
 );
+
+app.use(compression());
+app.use(helmet());
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/inventory", inventoryRouter);
