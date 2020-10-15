@@ -34,6 +34,7 @@ module.exports = function CategoryForm(props) {
 						type="file"
 						name="category_image"
 						id="category_image"
+						accept=".jpeg,.jpg,.png,.gif"
 					/>
 				</div>
 				<div className="form-group">
