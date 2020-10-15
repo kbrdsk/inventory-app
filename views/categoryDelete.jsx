@@ -1,5 +1,6 @@
 const React = require("react");
 const Default = require("./default");
+const Errors = require("./errors");
 
 module.exports = function CategoryDelete(props) {
 	const category = props.category;
@@ -11,6 +12,7 @@ module.exports = function CategoryDelete(props) {
 			<header>
 				<h1>{title}</h1>
 			</header>
+			{props.errors ? <Errors errors={props.errors} /> : null}
 			{categoryItems ? (
 				<ul className="to-be-deleted items">
 					This category must be removed from the following items
@@ -26,6 +28,10 @@ module.exports = function CategoryDelete(props) {
 						value={category._id}
 					/>
 					<input type="submit" value="Delete" />
+					<div className="form-group">
+						<label htmlFor="password">Admin Password: </label>
+						<input type="text" name="password" id="password" />
+					</div>
 				</form>
 			)}
 		</Default>

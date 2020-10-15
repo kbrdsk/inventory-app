@@ -1,6 +1,7 @@
 const Category = require("../models/category");
 const Item = require("../models/item");
 const validator = require("express-validator");
+const adminpw = require("../admin_password").password;
 
 module.exports.list = {
 	async get(req, res, next) {
@@ -152,23 +153,31 @@ module.exports.delete = {
 			next(error);
 		}
 	},
-	async post(req, res, next) {
-		try {
-			const [category, category_items] = await Promise.all([
-				Category.findById(req.body.categoryid),
-				Item.find({ categories: req.body.categoryid }),
-			]);
-			if (category_items.length > 0) {
-				res.render("categoryDelete", {
-					category,
-					category_items,
-				});
-			} else {
-				await Category.findByIdAndRemove(req.body.categoryid);
-				res.redirect("/inventory/category");
+	post: [
+		validator
+			.body("password", "Invalid password")
+			.custom((value) => value === adminpw),
+
+		async (req, res, next) => {
+			try {
+				const errors = validator.validationResult(req).errors;
+				const [category, category_items] = await Promise.all([
+					Category.findById(req.body.categoryid),
+					Item.find({ categories: req.body.categoryid }),
+				]);
+				if (category_items.length > 0 || errors.length > 0) {
+					res.render("categoryDelete", {
+						category,
+						category_items,
+						errors
+					});
+				} else {
+					await Category.findByIdAndRemove(req.body.categoryid);
+					res.redirect("/inventory/category");
+				}
+			} catch (error) {
+				next(error);
 			}
-		} catch (error) {
-			next(error);
-		}
-	},
+		},
+	],
 };

@@ -1,5 +1,6 @@
 const React = require("react");
 const Default = require("./default");
+const Errors = require("./errors");
 
 module.exports = function ItemForm(props) {
 	const item = props.item;
@@ -9,7 +10,7 @@ module.exports = function ItemForm(props) {
 			<header>
 				<h1>{title}</h1>
 			</header>
-			{props.errors ? <ul>{props.errors.map(renderError)}</ul> : null}
+			{props.errors ? <Errors errors={props.errors} /> : null}
 			<form method="POST" action="" className="create-update">
 				<div className="form-group">
 					<label htmlFor="name">Name: </label>
@@ -64,14 +65,6 @@ module.exports = function ItemForm(props) {
 		</Default>
 	);
 };
-
-function renderError(error) {
-	return (
-		<li className="form-error" key={error.msg}>
-			{error.msg}
-		</li>
-	);
-}
 
 function renderCategoryInput(item, category) {
 	return (

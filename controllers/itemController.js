@@ -2,6 +2,7 @@ const Item = require("../models/item");
 const Category = require("../models/category");
 const Recipe = require("../models/recipe");
 const validator = require("express-validator");
+const adminpw = require("../admin_password").password;
 
 module.exports.list = {
 	async get(req, res, next) {
@@ -218,23 +219,31 @@ module.exports.delete = {
 			next(error);
 		}
 	},
-	async post(req, res, next) {
-		try {
-			const [item, item_recipes] = await Promise.all([
-				Item.findById(req.params.id),
-				Recipe.find({ "ingredients.item": req.params.id }),
-			]);
-			if (item_recipes.length > 0) {
-				res.render("itemDelete", {
-					item,
-					item_recipes,
-				});
-			} else {
-				await Item.findByIdAndRemove(req.body.itemid);
-				res.redirect("/inventory/item");
+	post: [
+		validator
+			.body("password", "Invalid password")
+			.custom((value) => value === adminpw),
+
+		async (req, res, next) => {
+			try {
+				const errors = validator.validationResult(req).errors;
+				const [item, item_recipes] = await Promise.all([
+					Item.findById(req.params.id),
+					Recipe.find({ "ingredients.item": req.params.id }),
+				]);
+				if (item_recipes.length > 0 || errors.length > 0) {
+					res.render("itemDelete", {
+						item,
+						item_recipes,
+						errors,
+					});
+				} else {
+					await Item.findByIdAndRemove(req.body.itemid);
+					res.redirect("/inventory/item");
+				}
+			} catch (error) {
+				next(error);
 			}
-		} catch (error) {
-			next(error);
-		}
-	},
+		},
+	],
 };

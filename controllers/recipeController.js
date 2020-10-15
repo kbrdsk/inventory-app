@@ -1,6 +1,7 @@
 const Recipe = require("../models/recipe");
 const Item = require("../models/item");
 const validator = require("express-validator");
+const adminpw = require("../admin_password").password;
 
 module.exports.list = {
 	async get(req, res, next) {
@@ -213,8 +214,19 @@ module.exports.delete = {
 		const recipe = await Recipe.findById(req.params.id);
 		res.render("recipeDelete", { recipe });
 	},
-	async post(req, res, next) {
-		await Recipe.findByIdAndDelete(req.params.id);
-		res.redirect("/inventory/recipe");
-	},
+	post: [
+		validator
+			.body("password", "Invalid password")
+			.custom((value) => value === adminpw),
+		async (req, res, next) => {
+			const errors = validator.validationResult(req).errors;
+			if (errors.length > 0) {
+				const recipe = await Recipe.findById(req.params.id);
+				res.render("recipeDelete", { recipe, errors });
+			} else {
+				await Recipe.findByIdAndDelete(req.params.id);
+				res.redirect("/inventory/recipe");
+			}
+		},
+	],
 };
