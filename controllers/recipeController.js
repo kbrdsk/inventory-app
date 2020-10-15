@@ -1,7 +1,7 @@
 const Recipe = require("../models/recipe");
 const Item = require("../models/item");
 const validator = require("express-validator");
-const adminpw = require("../admin_password").password;
+const adminpw = process.env.CRUDPW || require("../admin_password").password;
 
 module.exports.list = {
 	async get(req, res, next) {
