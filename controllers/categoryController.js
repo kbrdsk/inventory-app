@@ -99,6 +99,8 @@ module.exports.update = {
 		}
 	},
 	post: [
+		upload.single("category_image"),
+
 		//validation
 		validator
 			.body("name", "Category name is required.")
@@ -114,9 +116,16 @@ module.exports.update = {
 		async (req, res, next) => {
 			try {
 				const errors = validator.validationResult(req);
-				const title = (await Category.findById(req.params.id)).name;
+				const updatingCategory = await Category.findById(req.params.id);
+				const title = updatingCategory.name;
+				const image = req.file
+					? req.file.buffer
+					: req.body.remove_image === "on"
+					? null
+					: updatingCategory.image;
 				const category = new Category({
 					name: req.body.name,
+					image,
 					_id: req.params.id,
 				});
 				if (!errors.isEmpty()) {

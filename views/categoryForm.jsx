@@ -36,7 +36,14 @@ module.exports = function CategoryForm(props) {
 						id="category_image"
 					/>
 				</div>
-
+				<div className="form-group">
+					<label htmlFor="remove_image">Remove Image? </label>
+					<input
+						type="checkbox"
+						name="remove_image"
+						id="remove_image"
+					/>
+				</div>
 				<input type="submit" value="Submit" />
 				{props.updating ? (
 					<div className="form-group">
