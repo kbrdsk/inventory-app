@@ -26,8 +26,9 @@ module.exports = function CategoryList(props) {
 };
 
 function renderCategory(category) {
-	const imagesrc = category.image
-		? "data:image/jpeg;base64," + category.image.toString("base64")
+	const image = category.image;
+	const imagesrc = image
+		? `data:${image.mimetype};base64,${image.data.toString("base64")}`
 		: null;
 	return (
 		<li>

@@ -54,7 +54,10 @@ module.exports.create = {
 				const errors = validator.validationResult(req);
 				const category = new Category({
 					name: req.body.name,
-					image: req.file.buffer,
+					image: {
+						data: req.file.buffer,
+						mimetype: req.file.mimetype,
+					},
 				});
 				if (!errors.isEmpty()) {
 					res.render("categoryForm", {
@@ -119,7 +122,7 @@ module.exports.update = {
 				const updatingCategory = await Category.findById(req.params.id);
 				const title = updatingCategory.name;
 				const image = req.file
-					? req.file.buffer
+					? { data: req.file.buffer, mimetype: req.file.mimetype }
 					: req.body.remove_image === "on"
 					? null
 					: updatingCategory.image;
