@@ -158,6 +158,9 @@ module.exports.update = {
 			)
 			.if((value, { req }) => req.body.stock !== "Out")
 			.isISO8601(),
+		validator
+			.body("password", "Invalid password")
+			.custom((value) => value === adminpw),
 
 		//sanitization
 		validator.body("name").escape(),

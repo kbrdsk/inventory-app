@@ -84,17 +84,28 @@ module.exports.update = {
 				error.status = 404;
 				next(error);
 			}
-			res.render("categoryForm", { category, title: category.name });
+			res.render("categoryForm", {
+				category,
+				title: category.name,
+				updating: true,
+			});
 		} catch (error) {
 			res.render("categoryList", { error });
 		}
 	},
 	post: [
+		//validation
 		validator
 			.body("name", "Category name is required.")
 			.trim()
 			.isLength({ min: 3 }),
+		validator
+			.body("password", "Invalid password")
+			.custom((value) => value === adminpw),
+
+		//sanitization
 		validator.sanitizeBody("name").escape(),
+
 		async (req, res, next) => {
 			try {
 				const errors = validator.validationResult(req);
@@ -107,6 +118,8 @@ module.exports.update = {
 					res.render("categoryForm", {
 						category,
 						errors: errors.array(),
+						updating: true,
+						title,
 					});
 					return;
 				} else {
@@ -114,13 +127,18 @@ module.exports.update = {
 						name: req.body.name,
 					});
 
-					if (found_category) {
+					if (
+						found_category &&
+						found_category._id.toString() !==
+							category._id.toString()
+					) {
 						const error = new Error("Category exists");
 						error.msg = "A category with that name already exists";
 						res.render("categoryForm", {
 							category,
 							title,
 							errors: [error],
+							updating: true,
 						});
 					} else {
 						const updatedCategory = await Category.findByIdAndUpdate(
@@ -169,7 +187,7 @@ module.exports.delete = {
 					res.render("categoryDelete", {
 						category,
 						category_items,
-						errors
+						errors,
 					});
 				} else {
 					await Category.findByIdAndRemove(req.body.categoryid);

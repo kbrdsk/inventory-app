@@ -76,6 +76,12 @@ module.exports = function RecipeForm(props) {
 					/>
 				</div>
 				<input type="submit" value="Submit" />
+				{props.updating ? (
+					<div className="form-group">
+						<label htmlFor="password">Admin Password: </label>
+						<input type="text" name="password" id="password" />
+					</div>
+				) : null}
 			</form>
 		</Default>
 	);

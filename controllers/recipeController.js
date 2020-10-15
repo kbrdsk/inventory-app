@@ -151,6 +151,9 @@ module.exports.update = {
 			.body("name", "Name must not be empty.")
 			.trim()
 			.isLength({ min: 1 }),
+		validator
+			.body("password", "Invalid password")
+			.custom((value) => value === adminpw),
 
 		//sanitization
 		validator.body("name").escape(),
