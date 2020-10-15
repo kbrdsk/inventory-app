@@ -1,7 +1,7 @@
 const Category = require("../models/category");
 const Item = require("../models/item");
 const validator = require("express-validator");
-const adminpw = require("../admin_password").password;
+const adminpw = process.env.CRUDPW || require("../admin_password").password;
 const upload = require("multer")();
 
 module.exports.list = {
@@ -51,7 +51,7 @@ module.exports.create = {
 		validator.sanitizeBody("name").escape(),
 		async (req, res, next) => {
 			try {
-				const errors = validator.validationResult(req);
+				let errors = validator.validationResult(req).array;
 				const category = new Category({
 					name: req.body.name,
 					image: {
@@ -59,10 +59,15 @@ module.exports.create = {
 						mimetype: req.file.mimetype,
 					},
 				});
-				if (!errors.isEmpty()) {
+				if (req.file.size > 100000) {
+					const sizeError = new Error("File size to large");
+					sizeError.msg = "Image must not exceed 10kb";
+					errors = [...errors, sizeError];
+				}
+				if (errors.length > 0) {
 					res.render("categoryForm", {
 						category,
-						errors: errors.array(),
+						errors,
 					});
 					return;
 				} else {
@@ -118,7 +123,7 @@ module.exports.update = {
 
 		async (req, res, next) => {
 			try {
-				const errors = validator.validationResult(req);
+				let errors = validator.validationResult(req).array();
 				const updatingCategory = await Category.findById(req.params.id);
 				const title = updatingCategory.name;
 				const image = req.file
@@ -131,10 +136,15 @@ module.exports.update = {
 					image,
 					_id: req.params.id,
 				});
-				if (!errors.isEmpty()) {
+				if (req.file.size > 100000) {
+					const sizeError = new Error("File size to large");
+					sizeError.msg = "Image must not exceed 10kb";
+					errors = [...errors, sizeError];
+				}
+				if (errors.length > 0) {
 					res.render("categoryForm", {
 						category,
-						errors: errors.array(),
+						errors,
 						updating: true,
 						title,
 					});
