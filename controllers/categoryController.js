@@ -59,7 +59,7 @@ module.exports.create = {
 						mimetype: req.file.mimetype,
 					},
 				});
-				if (req.file.size > 100000) {
+				if (req.file && req.file.size > 100000) {
 					const sizeError = new Error("File size to large");
 					sizeError.msg = "Image must not exceed 10kb";
 					errors = [...errors, sizeError];
@@ -136,7 +136,7 @@ module.exports.update = {
 					image,
 					_id: req.params.id,
 				});
-				if (req.file.size > 100000) {
+				if (req.file && req.file.size > 100000) {
 					const sizeError = new Error("File size to large");
 					sizeError.msg = "Image must not exceed 10kb";
 					errors = [...errors, sizeError];
