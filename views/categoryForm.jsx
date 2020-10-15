@@ -3,7 +3,7 @@ const Default = require("./default");
 
 module.exports = function CategoryForm(props) {
 	const category = props.category;
-	const title = prop.updating
+	const title = props.updating
 		? `Update Category: ${props.title}`
 		: "New Category";
 	return (
@@ -16,7 +16,7 @@ module.exports = function CategoryForm(props) {
 				method="POST"
 				action=""
 				className="create-update"
-				enctype="multipart/form-data"
+				encType="multipart/form-data"
 			>
 				<div className="form-group">
 					<label htmlFor="name">Name: </label>
@@ -28,6 +28,15 @@ module.exports = function CategoryForm(props) {
 						value={category ? category.name : null}
 					/>
 				</div>
+				<div className="form-group">
+					<label htmlFor="category_image">Image: </label>
+					<input
+						type="file"
+						name="category_image"
+						id="category_image"
+					/>
+				</div>
+
 				<input type="submit" value="Submit" />
 				{props.updating ? (
 					<div className="form-group">

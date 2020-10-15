@@ -26,9 +26,15 @@ module.exports = function CategoryList(props) {
 };
 
 function renderCategory(category) {
+	const imagesrc = category.image
+		? "data:image/jpeg;base64," + category.image.toString("base64")
+		: null;
 	return (
 		<li>
-			<a href={category.url}>{category.name}</a>
+			{category.image ? <img src={imagesrc} alt={category.name} /> : null}
+			<a href={category.url}>
+				<span className="name">{category.name}</span>
+			</a>
 		</li>
 	);
 }

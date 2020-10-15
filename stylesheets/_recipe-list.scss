@@ -7,19 +7,25 @@ ul.recipe-list {
 	align-items: flex-start;
 
 	li {
+		position: relative;
+		margin: 0.5em;
+		border-radius: 0.5em;
+		border: 2px solid $link-color;
+		overflow: hidden;
+
+		img {
+			position: absolute;
+			height: 100%;
+			opacity: 0.2;
+		}
+
 		a {
 			display: block;
 			text-decoration: none;
 			color: #000;
 			padding: 2em;
-			border-radius: 0.5em;
-			border: 2px solid $link-color;
+			font-weight: bold;
 			position: relative;
-			margin: 0.5em;
-
-			&:hover{
-				background-color: #ddd;
-			}
 
 			span {
 				&.vegan-indicator {
@@ -34,6 +40,19 @@ ul.recipe-list {
 					&[isVegan="false"] {
 						color: red;
 					}
+				}
+
+				&.name {
+					text-shadow: -2px -2px 0 #fff, 2px -2px 0 #fff,
+						-2px 2px 0 #fff, 2px 2px 0 #fff;
+				}
+			}
+
+			&:hover {
+				background-color: #ddda;
+
+				span.name {
+					background-color: #0000;
 				}
 			}
 		}

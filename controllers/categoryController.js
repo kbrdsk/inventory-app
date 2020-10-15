@@ -2,6 +2,7 @@ const Category = require("../models/category");
 const Item = require("../models/item");
 const validator = require("express-validator");
 const adminpw = require("../admin_password").password;
+const upload = require("multer")();
 
 module.exports.list = {
 	async get(req, res, next) {
@@ -42,6 +43,7 @@ module.exports.create = {
 		res.render("categoryForm");
 	},
 	post: [
+		upload.single("category_image"),
 		validator
 			.body("name", "Category name is required.")
 			.trim()
@@ -50,7 +52,10 @@ module.exports.create = {
 		async (req, res, next) => {
 			try {
 				const errors = validator.validationResult(req);
-				const category = new Category({ name: req.body.name });
+				const category = new Category({
+					name: req.body.name,
+					image: req.file.buffer,
+				});
 				if (!errors.isEmpty()) {
 					res.render("categoryForm", {
 						category,
