@@ -1,7 +1,7 @@
 const Category = require("../models/category");
 const Item = require("../models/item");
 const validator = require("express-validator");
-const adminpw = process.env.CRUDPW || require("../admin_password").password;
+const adminpw = process.env.CRUDPW;
 const upload = require("multer")();
 
 module.exports.list = {

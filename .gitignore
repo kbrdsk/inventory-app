@@ -2,6 +2,7 @@ db_url.js
 admin_password.js
 populatedb.js
 testfile.js
+.env
 public/stylesheets/
 
 # Logs
